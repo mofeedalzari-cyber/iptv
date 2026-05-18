@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPTV Player</title>
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+<style>
+body{
+background:#000;
+margin:0;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+video{
+width:100%;
+height:auto;
+}
+</style>
+</head>
+
+<body>
+
+<video id="video" controls autoplay></video>
+
+<script>
+const video = document.getElementById('video');
+
+const videoSrc = 'https://ostora.pages.dev/api/156592.png#hls';
+
+if(Hls.isSupported()){
+
+const hls = new Hls();
+
+hls.loadSource(videoSrc);
+
+hls.attachMedia(video);
+
+}
+else if(video.canPlayType('application/vnd.apple.mpegurl')){
+
+video.src = videoSrc;
+
+}
+</script>
+
+</body>
+</html>
