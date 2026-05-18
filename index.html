@@ -9,44 +9,66 @@
 
 <style>
 body{
-background:#000;
 margin:0;
+background:#000;
+font-family:Arial;
+color:white;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
 }
 
+.container{
+width:100%;
+max-width:900px;
+}
+
 video{
 width:100%;
-height:auto;
+background:black;
+border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 
+<div class="container">
 <video id="video" controls autoplay></video>
+</div>
 
 <script>
-const video = document.getElementById('video');
+const video = document.getElementById("video");
 
-const videoSrc = 'https://ostora.pages.dev/api/156592.png#hls';
+// 📺 رابط القناة
+const url = "http://het136a.ycn-redirect.com/live/918454578001/index.m3u8?t=224lgpQLc9fLol94VjPgLQ&e=1779124013";
+
+// ▶️ تشغيل البث
+function playStream(streamUrl){
 
 if(Hls.isSupported()){
+const hls = new Hls({
+enableWorker: true
+});
 
-const hls = new Hls();
-
-hls.loadSource(videoSrc);
-
+hls.loadSource(streamUrl);
 hls.attachMedia(video);
 
-}
-else if(video.canPlayType('application/vnd.apple.mpegurl')){
+hls.on(Hls.Events.ERROR, function(event, data){
+console.log("HLS Error:", data);
+});
 
-video.src = videoSrc;
-
 }
+else if(video.canPlayType("application/vnd.apple.mpegurl")){
+video.src = streamUrl;
+}
+else{
+alert("المتصفح لا يدعم تشغيل البث");
+}
+}
+
+playStream(url);
 </script>
 
 </body>
